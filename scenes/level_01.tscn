@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://cyfolu6syr4rt"]
+
+[ext_resource type="PackedScene" uid="uid://b74g8411nv3uo" path="res://scenes/player.tscn" id="1_1t1ct"]
+[ext_resource type="Script" path="res://scripts/LevelManager.gd" id="1_hjmls"]
+[ext_resource type="Texture2D" uid="uid://p30cev5b3b66" path="res://assets/cube_white_32x32.png" id="3_gnil0"]
+[ext_resource type="PackedScene" uid="uid://beobgjgnl4ipw" path="res://scenes/player_camera_2d.tscn" id="3_xybqv"]
+[ext_resource type="Script" path="res://scripts/Killzone.gd" id="4_m4g01"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_noytd"]
+texture = ExtResource("3_gnil0")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_dokvh"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_noytd")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dgmex"]
+
+[node name="level_01" type="Node2D"]
+script = ExtResource("1_hjmls")
+
+[node name="Player" parent="." instance=ExtResource("1_1t1ct")]
+position = Vector2(546, 278)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_dokvh")
+rendering_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(786446, 1, 0, 786447, 1, 0, 786448, 1, 0, 786449, 1, 0, 786450, 1, 0, 786451, 1, 0, 786452, 1, 0, 786453, 1, 0, 786454, 1, 0, 786455, 1, 0, 786456, 1, 0, 786462, 1, 0, 786463, 1, 0, 786464, 1, 0, 786465, 1, 0, 786466, 1, 0, 786467, 1, 0, 786468, 1, 0, 786469, 1, 0)
+
+[node name="PlayerCamera2D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_xybqv")]
+position = Vector2(544, 286)
+player = NodePath("../Player")
+smoothing_enabled = true
+smoothing_distance = 2
+
+[node name="Killzone" type="Area2D" parent="."]
+position = Vector2(346, 538)
+script = ExtResource("4_m4g01")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+shape = SubResource("WorldBoundaryShape2D_dgmex")

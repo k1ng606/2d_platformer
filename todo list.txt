@@ -1,3 +1,4 @@
 1. kill player when falling
 2. course obstacles(hazardous) fire too
 3. moving platforms
+4.test this
